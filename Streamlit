@@ -1,0 +1,22 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
+# Title for the app
+st.title("Airline Tweets Sentiment Analysis")
+
+# Load the dataset
+tweets = pd.read_csv("https://raw.githubusercontent.com/Iyzer/mb-tweets2/refs/heads/main/Tweets.csv")
+
+# Display the first few rows
+st.subheader("Sample of the data")
+st.dataframe(tweets.head())
+
+# Sentiment counts
+sentiments_counts = tweets["airline_sentiment"].value_counts().reset_index()
+sentiments_counts.columns = ["sentiment", "count"]
+
+# Plot pie chart
+st.subheader("Distribution of Tweets by Sentiment")
+fig = px.pie(sentiments_counts, values="count", names="sentiment", title="Count of Tweets by Sentiment")
+st.plotly_chart(fig)
